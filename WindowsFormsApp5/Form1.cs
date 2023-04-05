@@ -13,6 +13,7 @@ namespace WindowsFormsApp5
 {
     public partial class Form1 : Form
     {
+        int updid;
         public Form1()
         {
             InitializeComponent();
@@ -21,6 +22,11 @@ namespace WindowsFormsApp5
         private void button1_Click(object sender, EventArgs e)
         {
 
+        }
+        private void te
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            updid = (int)dataGridView1.SelectedRows[0].Cells[0].Value - 1;
         }
     }
 }

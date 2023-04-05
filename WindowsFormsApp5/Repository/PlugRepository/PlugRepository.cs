@@ -8,18 +8,17 @@ using WindowsFormsApp5.Models;
 
 namespace WindowsFormsApp5.Repository.PlugRepository
 {
-    internal class PlugRepository
+    internal class PlugRepository : IPlugRepisitiry
     {
-        internal class MySqlItemsRepository : IItemsRepisitiry
-        {
+
             private string connectionstring { get; set; }
-            public MySqlItemsRepository(string host, string database, string user, string password)
+            public PlugRepository(string host, string database, string user, string password)
             {
                 connectionstring = "Database" + database + "DataSourse" + host + "Password" + password + "User" + user;
             }
-            public List<Items> GetAll()
+            public List<Plug> GetAll()
             {
-                List<Items> allItems = new List<Items>();
+                List<Plug> allPlugs = new List<Plug>();
                 MySqlConnection conn = new MySqlConnection(connectionstring);
                 MySqlCommand queryCommand = conn.CreateCommand();
                 queryCommand.CommandText = connectionstring = "SELECT * FROM PlugProduct.Items";
@@ -30,7 +29,7 @@ namespace WindowsFormsApp5.Repository.PlugRepository
                     reader = queryCommand.ExecuteReader();
                     while (reader.Read())
                     {
-                        allItems.Add(new Items { ID = reader.GetInt32(0), Name = reader.GetString(1), Surname = reader.GetInt32(3), PlugID = reader.GetInt32(2) });
+                        allPlugs.Add(new Plug { ID = reader.GetInt32(0), Name = reader.GetString(1), Surname = reader.GetString(2), PhoneNumber = reader.GetString(3) });
                     }
                     conn.Close();
                 }
@@ -42,15 +41,15 @@ namespace WindowsFormsApp5.Repository.PlugRepository
                 {
                     conn.Close();
                 }
-                return allItems;
+                return allPlugs;
             }
 
-            public int Insert(Items items)
+            public int Insert(Plug plug)
             {
                 int rows = 0;
                 MySqlConnection conn = new MySqlConnection(connectionstring);
                 MySqlCommand insertCommand = conn.CreateCommand();
-                insertCommand.CommandText = $"INSERT INTO PlugProduct.Items(name, cost, plugID, weight, ID) VALUES ({items.Name}, {items.Cost}, {items.PlugID}, {items.Weight}, {items.ID})";
+                insertCommand.CommandText = $"INSERT INTO PlugProduct.Items(name, Surname, ID, PhoneNumber) VALUES ({plug.Name}, {plug.Surname}, {plug.ID}, {plug.PhoneNumber})";
                 try
                 {
                     conn.Open();
@@ -68,12 +67,12 @@ namespace WindowsFormsApp5.Repository.PlugRepository
                 return rows;
             }
 
-            public int Update(int id, Items items)
+            public int Update(int id, Plug plug)
             {
                 int rows = 0;
                 MySqlConnection conn = new MySqlConnection(connectionstring);
                 MySqlCommand insertCommand = conn.CreateCommand();
-                insertCommand.CommandText = $"UPDATE PlugProduct.Itemss.Weight SET name = {items.Name}, ID = {items.ID}, Weight = {items.Weight}, Cost = {items.Cost}, plugID = {items.PlugID} WHERE id = {id} )";
+                insertCommand.CommandText = $"UPDATE PlugProduct.Plug SET name = {plug.Name}, ID = {plug.ID}, surname = {plug.Surname}, PhoneNumber = {plug.PhoneNumber})";
                 try
                 {
                     conn.Open();
@@ -91,5 +90,5 @@ namespace WindowsFormsApp5.Repository.PlugRepository
                 return rows;
             }
         }
-    }
+    
 }

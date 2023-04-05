@@ -7,7 +7,7 @@ using WindowsFormsApp5.Models;
 
 namespace WindowsFormsApp5.Repository.PlugRepository
 {
-    internal interface IPlugRepisitiry : IRepository<Items>
+    internal interface IPlugRepisitiry : IRepository<Plug>
     {
         //List<Items> GetAllItemsByPrice(int price);
     }

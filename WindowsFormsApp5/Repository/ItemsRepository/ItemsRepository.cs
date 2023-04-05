@@ -71,7 +71,7 @@ namespace WindowsFormsApp5
             int rows = 0;
             MySqlConnection conn = new MySqlConnection(connectionstring);
             MySqlCommand insertCommand = conn.CreateCommand();
-            insertCommand.CommandText = $"UPDATE PlugProduct.Itemss.Weight SET name = {items.Name}, ID = {items.ID}, Weight = {items.Weight}, Cost = {items.Cost}, plugID = {items.PlugID} WHERE id = {id} )";
+            insertCommand.CommandText = $"UPDATE PlugProduct.Items.Weight SET name = {items.Name}, ID = {items.ID}, Weight = {items.Weight}, Cost = {items.Cost}, plugID = {items.PlugID} WHERE id = {id} )";
             try
             {
                 conn.Open();
