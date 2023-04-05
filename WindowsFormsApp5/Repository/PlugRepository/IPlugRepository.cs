@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using WindowsFormsApp5.Models;
 
-namespace WindowsFormsApp5
+namespace WindowsFormsApp5.Repository.PlugRepository
 {
-    internal interface IItemsRepisitiry : IRepository<Items>
+    internal interface IPlugRepisitiry : IRepository<Items>
     {
         //List<Items> GetAllItemsByPrice(int price);
     }

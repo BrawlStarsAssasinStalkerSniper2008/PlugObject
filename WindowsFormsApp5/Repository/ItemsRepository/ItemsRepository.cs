@@ -20,21 +20,73 @@ namespace WindowsFormsApp5
             List<Items> allItems = new List<Items>();
             MySqlConnection conn = new MySqlConnection(connectionstring);
             MySqlCommand queryCommand = conn.CreateCommand();
-        }
-
-        public List<Items> GetAllItemsByPrice(int price)
-        {
-            throw new NotImplementedException();
+            queryCommand.CommandText = connectionstring = "SELECT * FROM PlugProduct.Items";
+            try
+            {
+                conn.Open();
+                MySqlDataReader reader;
+                reader = queryCommand.ExecuteReader();
+                while(reader.Read())
+                {
+                    allItems.Add(new Items { ID = reader.GetInt32(0), Name = reader.GetString(1), Cost = reader.GetInt32(2), Weight = reader.GetInt32(3), PlugID = reader.GetInt32(2)});
+                }
+                conn.Close();
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return allItems;
         }
 
         public int Insert(Items items)
         {
-            throw new NotImplementedException();
+            int rows = 0;
+            MySqlConnection conn = new MySqlConnection(connectionstring);
+            MySqlCommand insertCommand= conn.CreateCommand();
+            insertCommand.CommandText = $"INSERT INTO PlugProduct.Items(name, cost, plugID, weight, ID) VALUES ({items.Name}, {items.Cost}, {items.PlugID}, {items.Weight}, {items.ID})";
+            try
+            {
+                conn.Open();
+                rows = insertCommand.ExecuteNonQuery();
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            finally
+            {
+                conn.Close();
+            }
+            return rows;
         }
 
         public int Update(int id, Items items)
         {
-            throw new NotImplementedException();
+            int rows = 0;
+            MySqlConnection conn = new MySqlConnection(connectionstring);
+            MySqlCommand insertCommand = conn.CreateCommand();
+            insertCommand.CommandText = $"UPDATE PlugProduct.Itemss.Weight SET name = {items.Name}, ID = {items.ID}, Weight = {items.Weight}, Cost = {items.Cost}, plugID = {items.PlugID} WHERE id = {id} )";
+            try
+            {
+                conn.Open();
+                rows = insertCommand.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            finally
+            {
+                conn.Close();
+            }
+            return rows;
         }
     }
 }
